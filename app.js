@@ -1,7 +1,10 @@
 var express = require('express'),
   routes = require('./routes'),
-  http = require('http'),
+  //http = require('http'),
   path = require('path');
+  //database = require('./routes/database');
+
+
 
 var app = module.exports = express();
 
@@ -9,16 +12,32 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.engine('html', require('jade').renderFile);
 app.use(express.bodyParser());
+app.use(express.cookieParser('y487649'));
+app.use(express.session());
 app.use(express.methodOverride());
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, '/client')));
 app.use(app.router);
+
+//database.init();
+//var Connection = require('mongodb').Connection;
+//var BSON = require('mongodb').BSON;
+//var ObjectID = require('mongodb').ObjectID;
+
+//Routes
 
 app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
+
+app.get('/db/posts', routes.getPosts);
+
+app.get('/db/post/:title', routes.getPost);
+app.put('/db/post/:title', routes.editPost);
+app.post('/db/post', routes.addPost);
+app.delete('/db/post/:title', routes.deletePost);
 
 app.get('*', routes.index);
 
 
 
-http.createServer(app).listen(app.get('port'));
+app.listen(app.get('port'));
 console.log('Listening');
