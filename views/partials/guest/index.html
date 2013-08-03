@@ -1,0 +1,8 @@
+<div><a href = "/login">Login</a></div>
+<p>There are {{posts.length}} posts</p>
+
+<div ng-repeat="post in posts">
+<h3>{{post.title}}</h3>
+<h4>Posted on {{post.date}}</h4>
+<div><p>{{post.body}}</p></div>
+</div>
