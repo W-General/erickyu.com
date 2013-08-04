@@ -7,19 +7,25 @@ var MONGOHQ_URL = process.env.MONGOHQ_URL || 'mongodb://nodejitsu:d0f4c334f3db76
 
 db = null;
 
+function reset() {
+	db.collection('posts', function(err, collection) {
+			collection.remove({}, function(err, removed){});
+		});
+		db.collection('users', function(err, collection) {
+			collection.remove({}, function(err, removed){});
+		});
+}
+
 function init() {
 	MongoClient.connect(MONGOHQ_URL, function(err, _db) {
 		db = _db;
-		/*db.collection('posts', function(err, collection) {
-			collection.remove({}, function(err, removed){});
-		});*/
+
 
 		/*
 		db.collection('posts', function(err, collection) {
 			collection.update({title:'999'}, {title:'222'}, function(err, modded){});
 		});
 		*/
-
 
 		/*db.createCollection('posts', function(err, collection) {
 			collection.insert({title:'blah', date:datenow.toString(), body:'blah'}, {w:0}, function(err, result) {
@@ -33,27 +39,28 @@ function init() {
 	});
 };
 
-function getCollection(callback) {
-	db.collection('posts', function(error, collection) {
+function getCollection(coll_name, callback) {
+	db.collection(coll_name, function(error, collection) {
 		if(error) callback(error);
 		else callback(null, collection);
 	});
 };
 
-function findAll(callback) {
-	getCollection(function(error, collection) {
+function findAll(coll_name, callback) {
+	getCollection(coll_name, function(error, collection) {
 		if(error) callback(error);
 		else {
 			collection.find().toArray(function(error, results) {
 				if(error) callback(error);
 				else callback(null, results);
+				console.log(results);
 			});
 		}
 	});
 };
 
 function addPost(post, callback) {
-	getCollection(function(error, collection) {
+	getCollection('posts', function(error, collection) {
 		collection.insert(post, {w:0}, function(error, results){
 			if(error) callback(error);
 			else callback(null, results);
@@ -62,7 +69,7 @@ function addPost(post, callback) {
 };
 
 function getPost(post_title, callback) {
-	getCollection(function(error, collection){
+	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
 			collection.findOne({title:post_title}, function(error, post) {
@@ -74,7 +81,7 @@ function getPost(post_title, callback) {
 };
 
 function editPost(post_title, post, callback) {
-	getCollection(function(error, collection){
+	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
 			//console.log(post);
@@ -87,12 +94,36 @@ function editPost(post_title, post, callback) {
 };
 
 function deletePost(post_title, callback) {
-	getCollection(function(error, collection){
+	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
 			collection.remove({title:post_title}, function(error, result) {
 				if(error) callback(error);
 				else callback(null, result);
+			});
+		}
+	});
+};
+
+///User functions
+
+function addUser(username, password, callback) {
+	var user = {username: username, password: password};
+	getCollection('users', function(error, collection) {
+		collection.insert(user, {w:0}, function(error, results){
+			if(error) callback(error);
+			else callback(null, results);
+		});
+	});
+};
+
+function getUser(username, callback) {
+	getCollection('users', function(error, collection){
+		if(error) callback(error);
+		else {
+			collection.findOne({username:username}, function(error, user) {
+				if(error) callback(error);
+				else callback(null, user);
 			});
 		}
 	});
@@ -104,3 +135,8 @@ exports.addPost = addPost;
 exports.getPost = getPost;
 exports.editPost = editPost;
 exports.deletePost = deletePost;
+
+
+exports.addUser = addUser;
+exports.getUser = getUser;
+exports.reset = reset;

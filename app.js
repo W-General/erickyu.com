@@ -13,7 +13,8 @@ app.set('views', __dirname + '/views');
 app.engine('html', require('jade').renderFile);
 app.use(express.bodyParser());
 app.use(express.cookieParser('y487649'));
-app.use(express.session());
+//app.use(express.session());
+app.use(express.cookieSession());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, '/client')));
 app.use(app.router);
@@ -34,6 +35,11 @@ app.get('/db/post/:title', routes.getPost);
 app.put('/db/post/:title', routes.editPost);
 app.post('/db/post', routes.addPost);
 app.delete('/db/post/:title', routes.deletePost);
+
+app.post('/db/user', routes.addUser);
+app.post('/db/user/:name', routes.login);
+app.get('/logout', routes.logout);
+
 
 app.get('*', routes.index);
 

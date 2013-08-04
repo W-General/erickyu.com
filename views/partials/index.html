@@ -1,3 +1,4 @@
+<div><p><a href="/add">Add Post</a></p></div>
 <p>There are {{posts.length}} posts</p>
 
 <div ng-repeat="post in posts">
@@ -7,3 +8,4 @@
 <div><a href = "/edit/{{post.title}}">Edit</a></div>
 <div><a href = "/delete/{{post.title}}">Delete</a></div>
 </div>
+<div><button ng-click="logout()">Logout</a></div>

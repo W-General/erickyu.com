@@ -1,5 +1,6 @@
 var database = require('./database');
 var datenow = new Date();
+//var crypto = require('crypto');
 
 database.init();
 
@@ -9,7 +10,8 @@ function index(req, res){
 
 function partials(req, res){
 	var name = req.params.name;
-	if (req.session.user) {
+	console.log(req.session);
+	if (req.session.username) {
 		res.render('partials/'+name+'.html');	
 	} else {
 		res.render('partials/guest/'+name+'.html');	
@@ -17,7 +19,7 @@ function partials(req, res){
 };
 
 function getPosts(req, res){
-	database.findAll(function(error, posts){
+	database.findAll('posts', function(error, posts){
 		res.json({posts:posts});
 	});
 };
@@ -53,6 +55,39 @@ function deletePost(req, res){
 	});
 }
 
+function addUser(req, res){
+	var user = req.body;
+	database.addUser(user.username, user.password, function(error, result) {
+		res.json(user);
+	});
+
+}
+
+function login(req, res){
+	var user = req.body;
+	console.log('user:' + user.username + '\n');
+	console.log('pass:' + user.password + '\n');
+	database.getUser(user.username, function(error, result){
+		if(result.password === user.password) {
+			req.session.username = result.username;
+			req.session.password = result.password;
+			console.log('verified');
+		}
+		res.json(true);
+	});
+}
+
+function logout(req, res){
+	req.session = null;
+	res.render('index.html');
+}
+
+
+function reset(req, res){
+	database.reset();
+	res.render('index.html');
+}
+
 exports.index = index;
 exports.partials = partials;
 exports.getPosts = getPosts;
@@ -60,3 +95,8 @@ exports.addPost = addPost;
 exports.getPost = getPost;
 exports.editPost = editPost;
 exports.deletePost = deletePost;
+
+exports.addUser = addUser;
+exports.login = login;
+exports.logout = logout;
+exports.reset = reset;

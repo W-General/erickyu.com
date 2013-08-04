@@ -7,6 +7,7 @@ angular.module('blog', ['blog.controllers']).
     $routeProvider.
     	when('/', {templateUrl: 'partials/index', controller: 'IndexCtrl'}).
       when('/login', {templateUrl: 'partials/login', controller: 'LoginCtrl'}).
+      when('/signup', {templateUrl: 'partials/signup', controller: 'SignupCtrl'}).
     	when('/empty', {templateUrl: 'partials/empty', controller: 'EmptyCtrl'}).
     	when('/add', {templateUrl: 'partials/add', controller: 'AddCtrl'}).
     	when('/edit/:title', {templateUrl: 'partials/edit', controller: 'EditCtrl'}).

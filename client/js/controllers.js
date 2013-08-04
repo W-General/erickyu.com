@@ -4,18 +4,48 @@
 
 
 angular.module('blog.controllers', []).
-  controller('IndexCtrl', function ($scope, $http, $location) {
+  controller('IndexCtrl', function ($scope, $http, $location, $window) {
   	$http.get('/db/posts').
   		success(function(data, status, headers, config) {
         $scope.posts = data.posts;
         if(data.posts.length===0) {
           $location.path('/empty');
         }
-  		});
-  }).
-  controller('EmptyCtrl', function ($scope) {
-    // write Ctrl here
+  	});
 
+    $scope.logout = function () {
+      $http.get('/logout').success(function(){
+        $window.location.href ='/';
+      });
+    };
+  }).
+  controller('LoginCtrl', function ($scope, $http, $routeParams, $location, $window) {
+    $scope.form = {};
+    $scope.login = function () { //////THis needs to be worked on
+      $http.post('/db/user/' + $routeParams.username, $scope.form).///
+        success(function(data) {
+          //$location.path('/');
+                  $window.location.href ='/';
+
+      });
+    };
+  }).
+  controller('SignupCtrl', function ($scope, $http, $location) {
+    $scope.form = {};
+    $scope.signup = function () { //////THis needs to be worked on
+      $http.post('/db/user', $scope.form).///
+        success(function(data) {
+          $location.path('/'); /////Worked on these...
+      });
+    };
+  }).
+  controller('EmptyCtrl', function ($scope, $window, $http) {
+    // write Ctrl here
+    $scope.logout = function () {
+      $http.get('/logout').success(function(){
+        $window.location.href ='/';
+      });
+    };
   }).
   controller('AddCtrl', function ($scope, $http, $location) {
     $scope.form = {};
@@ -26,6 +56,7 @@ angular.module('blog.controllers', []).
       });
     };
   }).
+
   controller('EditCtrl', function ($scope, $http, $routeParams, $location) {
     $scope.form = {};
     $http.get('/db/post/' + $routeParams.title).success(function(data) {
