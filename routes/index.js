@@ -13,8 +13,10 @@ function partials(req, res){
 	console.log(req.session);
 	if (req.session.username) {
 		res.render('partials/'+name+'.html');	
+		console.log("has session");
 	} else {
 		res.render('partials/guest/'+name+'.html');	
+		console.log("no session");
 	}
 };
 
