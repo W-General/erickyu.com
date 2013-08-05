@@ -26,6 +26,7 @@ function init() {
 			collection.update({title:'999'}, {title:'222'}, function(err, modded){});
 		});
 		*/
+		
 
 		/*db.createCollection('posts', function(err, collection) {
 			collection.insert({title:'blah', date:datenow.toString(), body:'blah'}, {w:0}, function(err, result) {
