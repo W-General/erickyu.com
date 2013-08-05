@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('blog', ['blog.controllers']).
+angular.module('blog', ['blog.controllers', 'blog.filters']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
     	when('/', {templateUrl: 'partials/index', controller: 'IndexCtrl'}).
