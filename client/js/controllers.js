@@ -12,7 +12,6 @@ angular.module('blog.controllers', []).
           $location.path('/empty');
         }
   	});
-
     $scope.logout = function () {
       $http.get('/logout').success(function(){
         $window.location.href ='/';
@@ -21,26 +20,23 @@ angular.module('blog.controllers', []).
   }).
   controller('LoginCtrl', function ($scope, $http, $routeParams, $location, $window) {
     $scope.form = {};
-    $scope.login = function () { //////THis needs to be worked on
-      $http.post('/db/user/' + $routeParams.username, $scope.form).///
+    $scope.login = function () { 
+      $http.post('/db/user/' + $routeParams.username, $scope.form).
         success(function(data) {
-          //$location.path('/');
-                  $window.location.href ='/';
-
+          $window.location.href ='/';
       });
     };
   }).
   controller('SignupCtrl', function ($scope, $http, $location) {
     $scope.form = {};
-    $scope.signup = function () { //////THis needs to be worked on
-      $http.post('/db/user', $scope.form).///
+    $scope.signup = function () {
+      $http.post('/db/user', $scope.form).
         success(function(data) {
-          $location.path('/'); /////Worked on these...
+          $location.path('/');
       });
     };
   }).
   controller('EmptyCtrl', function ($scope, $window, $http) {
-    // write Ctrl here
     $scope.logout = function () {
       $http.get('/logout').success(function(){
         $window.location.href ='/';
@@ -59,12 +55,12 @@ angular.module('blog.controllers', []).
 
   controller('EditCtrl', function ($scope, $http, $routeParams, $location) {
     $scope.form = {};
-    $http.get('/db/post/' + $routeParams.title).success(function(data) {
+    $http.get('/db/post/' + $routeParams.id).success(function(data) {
       $scope.form = data.post;
     });
 
     $scope.edit = function () {
-      $http.put('/db/post/' + $routeParams.title, $scope.form).
+      $http.put('/db/post/' + $routeParams.id, $scope.form).
         success(function(data) {
           $location.path('/');
         });
@@ -72,7 +68,7 @@ angular.module('blog.controllers', []).
   }).
   controller('DeleteCtrl', function ($scope, $http, $routeParams, $location) {
     $scope.delete = function () {
-      $http.delete('/db/post/' + $routeParams.title).
+      $http.delete('/db/post/' + $routeParams.id).
         success(function(data) {
           $location.path('/');
         });

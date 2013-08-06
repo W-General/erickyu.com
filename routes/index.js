@@ -10,13 +10,21 @@ function index(req, res){
 
 function partials(req, res){
 	var name = req.params.name;
-	console.log(req.session);
+	//console.log(req.session);
 	if (req.session.username) {
-		res.render('partials/'+name+'.html');	
-		console.log("has session");
+		database.getUser(req.session.username, function(error, result){
+			if(result.password === req.session.password) {
+				res.render('partials/'+name+'.html');	
+				//console.log("has session and verified");
+			} else {
+				req.session = null;
+				res.render('partials/guest/'+name+'.html');	
+				//console.log("fake session");
+			}	
+		});
 	} else {
 		res.render('partials/guest/'+name+'.html');	
-		console.log("no session");
+		//console.log("no session");
 	}
 };
 
@@ -35,24 +43,24 @@ function addPost(req, res){
 };
 
 function getPost(req, res){
-	var title = req.params.title;
-	database.getPost(title, function(error, result) {
+	var id = req.params.id;
+	database.getPost(id, function(error, result) {
 		//console.log(result);
 		res.json({post: result});
 	});
 };
 
 function editPost(req, res){
-	var title = req.params.title;
+	var id = req.params.id;
 	var post = req.body;
-	database.editPost(title, post, function(error, result) {
+	database.editPost(id, post, function(error, result) {
 		res.json(true);
 	});
 };
 
 function deletePost(req, res){
-	var title = req.params.title;
-	database.deletePost(title, function(error, result) {
+	var id = req.params.id;
+	database.deletePost(id, function(error, result) {
 		res.json(true);
 	});
 }
@@ -67,13 +75,13 @@ function addUser(req, res){
 
 function login(req, res){
 	var user = req.body;
-	console.log('user:' + user.username + '\n');
-	console.log('pass:' + user.password + '\n');
+	//console.log('user:' + user.username + '\n');
+	//console.log('pass:' + user.password + '\n');
 	database.getUser(user.username, function(error, result){
 		if(result.password === user.password) {
 			req.session.username = result.username;
 			req.session.password = result.password;
-			console.log('verified');
+			//console.log('verified');
 		}
 		res.json(true);
 	});
@@ -81,12 +89,6 @@ function login(req, res){
 
 function logout(req, res){
 	req.session = null;
-	res.render('index.html');
-}
-
-
-function reset(req, res){
-	database.reset();
 	res.render('index.html');
 }
 
@@ -101,4 +103,3 @@ exports.deletePost = deletePost;
 exports.addUser = addUser;
 exports.login = login;
 exports.logout = logout;
-exports.reset = reset;

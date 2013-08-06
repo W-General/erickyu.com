@@ -31,10 +31,10 @@ app.get('/partials/:name', routes.partials);
 
 app.get('/db/posts', routes.getPosts);
 
-app.get('/db/post/:title', routes.getPost);
-app.put('/db/post/:title', routes.editPost);
+app.get('/db/post/:id', routes.getPost);
+app.put('/db/post/:id', routes.editPost);
 app.post('/db/post', routes.addPost);
-app.delete('/db/post/:title', routes.deletePost);
+app.delete('/db/post/:id', routes.deletePost);
 
 app.post('/db/user', routes.addUser);
 app.post('/db/user/:name', routes.login);
