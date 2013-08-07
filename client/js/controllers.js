@@ -55,12 +55,12 @@ angular.module('blog.controllers', []).
 
   controller('EditCtrl', function ($scope, $http, $routeParams, $location) {
     $scope.form = {};
-    $http.get('/db/post/' + $routeParams.id).success(function(data) {
+    $http.get('/db/post/' + $routeParams.year + '/' + $routeParams.month + '/' + $routeParams.day + '/' + $routeParams.title).success(function(data) {
       $scope.form = data.post;
     });
 
     $scope.edit = function () {
-      $http.put('/db/post/' + $routeParams.id, $scope.form).
+      $http.put('/db/post/' + $routeParams.year + '/' + $routeParams.month + '/' + $routeParams.day + '/' + $routeParams.title, $scope.form).
         success(function(data) {
           $location.path('/');
         });
@@ -68,7 +68,7 @@ angular.module('blog.controllers', []).
   }).
   controller('DeleteCtrl', function ($scope, $http, $routeParams, $location) {
     $scope.delete = function () {
-      $http.delete('/db/post/' + $routeParams.id).
+      $http.delete('/db/post/' + $routeParams.year + '/' + $routeParams.month + '/' + $routeParams.day + '/' + $routeParams.title).
         success(function(data) {
           $location.path('/');
         });

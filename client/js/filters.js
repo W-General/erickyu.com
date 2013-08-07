@@ -13,6 +13,11 @@ filter('newlines', function() {
                 .replace(/>/g, '&gt;')
                 .replace(/</g, '&lt;');
     }
+})
+.filter('despace', function () {
+	return function(text) {
+		return text.replace(/\s+/g, '-').toLowerCase();
+	}
 });
 
 

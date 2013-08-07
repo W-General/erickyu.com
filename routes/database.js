@@ -31,6 +31,7 @@ function init() {
 	MongoClient.connect(MONGOHQ_URL, function(err, _db) {
 		db = _db;
 
+
 	});
 };
 
@@ -69,22 +70,21 @@ function findAll(coll_name, callback) {
 
 function addPost(post, callback) {
 	getCollection('posts', function(error, collection) {
-		getNextSequence("userid", function(error, seq) {
-			post.id = seq; 	
-			collection.insert(post, {w:0}, function(error, results){
-				if(error) callback(error);
-				else callback(null, results);
-			});
+		var date = new Date();
+		var title = post.title.replace(/\s+/g, '-').toLowerCase();
+		var post_id = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+'/'+title;
+		collection.insert({title: post.title, body: post.body, date: new Date(), _id: post_id}, {w:0}, function(error, results){
+			if(error) callback(error);
+			else callback(null, results);
 		});
 	});
 };
 
-function getPost(pid, callback) {
+function getPost(post_id, callback) {
 	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
-			var id = parseInt(pid);
-			collection.findOne({id:id}, function(error, post) {
+			collection.findOne({_id:post_id}, function(error, post) {
 				if(error) callback(error);
 				else callback(null, post);
 			});
@@ -92,12 +92,11 @@ function getPost(pid, callback) {
 	});
 };
 
-function editPost(pid, post, callback) {
+function editPost(post_id, post, callback) {
 	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
-			var id = parseInt(pid);
-			collection.update({id:id}, {$set: {title: post.title, body: post.body, id: post.id}}, {safe: true}, function(error, result) {
+			collection.update({_id:post_id}, {$set: {title: post.title, body: post.body, date: post.date, _id: post_id}}, {safe: true}, function(error, result) {
 				if(error) callback(error);
 				else callback(null, result);
 			});
@@ -105,12 +104,11 @@ function editPost(pid, post, callback) {
 	});
 };
 
-function deletePost(pid, callback) {
+function deletePost(post_id, callback) {
 	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
-			var id = parseInt(pid);
-			collection.remove({id:id}, function(error, result) {
+			collection.remove({_id:post_id}, function(error, result) {
 				if(error) callback(error);
 				else callback(null, result);
 			});

@@ -10,7 +10,6 @@ function index(req, res){
 
 function partials(req, res){
 	var name = req.params.name;
-	//console.log(req.session);
 	if (req.session.username) {
 		database.getUser(req.session.username, function(error, result){
 			if(result.password === req.session.password) {
@@ -36,31 +35,31 @@ function getPosts(req, res){
 
 function addPost(req, res){
 		var post = req.body;
-		post.date = datenow.toString();
+		//post.date = datenow.toString();
 		database.addPost(post, function(error, results) {
 			res.json(post);
 		});
 };
 
 function getPost(req, res){
-	var id = req.params.id;
-	database.getPost(id, function(error, result) {
+	var post_id = req.params.year + '/' + req.params.month + '/' + req.params.day + '/' + req.params.title;
+	database.getPost(post_id, function(error, result) {
 		//console.log(result);
 		res.json({post: result});
 	});
 };
 
 function editPost(req, res){
-	var id = req.params.id;
+	var post_id = req.params.year + '/' + req.params.month + '/' + req.params.day + '/' + req.params.title;
 	var post = req.body;
-	database.editPost(id, post, function(error, result) {
+	database.editPost(post_id, post, function(error, result) {
 		res.json(true);
 	});
 };
 
 function deletePost(req, res){
-	var id = req.params.id;
-	database.deletePost(id, function(error, result) {
+	var post_id = req.params.year + '/' + req.params.month + '/' + req.params.day + '/' + req.params.title;
+	database.deletePost(post_id, function(error, result) {
 		res.json(true);
 	});
 }
