@@ -4,7 +4,7 @@
 
 
 angular.module('blog.controllers', []).
-  controller('IndexCtrl', function ($scope, $http, $location, $window) {
+  controller('IndexCtrl', function ($scope, $http, $routeParams, $location, $window) {
   	$http.get('/db/posts').
   		success(function(data, status, headers, config) {
         $scope.posts = data.posts;
@@ -17,8 +17,6 @@ angular.module('blog.controllers', []).
         $window.location.href ='/';
       });
     };
-  }).
-  controller('LoginCtrl', function ($scope, $http, $routeParams, $location, $window) {
     $scope.form = {};
     $scope.login = function () { 
       $http.post('/db/user/' + $routeParams.username, $scope.form).
@@ -27,6 +25,16 @@ angular.module('blog.controllers', []).
       });
     };
   }).
+  /*
+  controller('LoginCtrl', function ($scope, $http, $routeParams, $location, $window) {
+    $scope.form = {};
+    $scope.login = function () { 
+      $http.post('/db/user/' + $routeParams.username, $scope.form).
+        success(function(data) {
+          $window.location.href ='/';
+      });
+    };
+  }).*/
   controller('SignupCtrl', function ($scope, $http, $location) {
     $scope.form = {};
     $scope.signup = function () {

@@ -11,6 +11,7 @@ var app = module.exports = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.engine('html', require('jade').renderFile);
+//app.set('view engine', 'jade');
 app.use(express.bodyParser());
 app.use(express.cookieParser('y487649'));
 //app.use(express.session());

@@ -1,6 +1,16 @@
 <div ng-repeat="post in posts | orderBy:'-date'">
-<h3>{{post.title}}</h3>
-<h4>Posted on {{post.date | date:'short'}}</h4>
-<div><p ng-bind-html-unsafe="post.body | noHTML | newlines"></p></div>
+<div class="panel">
+<div class="panel-heading"><h3 class="panel-title">{{post.title}}</h3>
+<h6>Posted on {{post.date | date:'short'}}</h6></div>
+<p ng-bind-html-unsafe="post.body | noHTML | newlines"></p>
 </div>
-<div><a href = "/login">Login</a></div>
+</div>
+<div class="navbar">
+<form class="navbar-form pull-left">
+<label for="username">Username: </label><input ng-model="form.username" name="username"></input>
+<label for="password">Password: </label><input type="password" ng-model="form.password" name="password"></input>
+<button type="button" class="btn btn-default" ng-click="login()">Login</button>
+</form>
+</div>
+
+
