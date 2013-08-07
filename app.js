@@ -13,7 +13,7 @@ app.set('views', __dirname + '/views');
 app.engine('html', require('jade').renderFile);
 //app.set('view engine', 'jade');
 app.use(express.bodyParser());
-app.use(express.cookieParser('y487649'));
+app.use(express.cookieParser('[omitted]'));
 //app.use(express.session());
 app.use(express.cookieSession());
 app.use(express.methodOverride());
