@@ -8,10 +8,10 @@ angular.module('blog', ['blog.controllers', 'blog.filters']).
     	when('/', {templateUrl: 'partials/index', controller: 'IndexCtrl'}).
       when('/login', {templateUrl: 'partials/login', controller: 'LoginCtrl'}).
       when('/signup', {templateUrl: 'partials/signup', controller: 'SignupCtrl'}).
-    	when('/empty', {templateUrl: 'partials/empty', controller: 'EmptyCtrl'}).
-    	when('/add', {templateUrl: 'partials/add', controller: 'AddCtrl'}).
-    	when('/edit/:year/:month/:day/:title', {templateUrl: 'partials/edit', controller: 'EditCtrl'}).
-      when('/delete/:year/:month/:day/:title', {templateUrl: 'partials/delete', controller: 'DeleteCtrl'}).
+    	when('/blog/empty', {templateUrl: 'partials/empty', controller: 'EmptyCtrl'}).
+    	when('/blog/add', {templateUrl: 'partials/add', controller: 'AddCtrl'}).
+    	when('/blog/:year/:month/:day/:title/edit', {templateUrl: 'partials/edit', controller: 'EditCtrl'}).
+      when('/blog/:year/:month/:day/:title/delete', {templateUrl: 'partials/delete', controller: 'DeleteCtrl'}).
     	otherwise({redirectTo: '/'});
     $locationProvider.html5Mode(true);
   }]);

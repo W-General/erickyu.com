@@ -1,5 +1,4 @@
 var database = require('./database');
-var datenow = new Date();
 //var crypto = require('crypto');
 
 database.init();
@@ -35,7 +34,6 @@ function getPosts(req, res){
 
 function addPost(req, res){
 		var post = req.body;
-		//post.date = datenow.toString();
 		database.addPost(post, function(error, results) {
 			res.json(post);
 		});

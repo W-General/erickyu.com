@@ -9,7 +9,7 @@ angular.module('blog.controllers', []).
   		success(function(data, status, headers, config) {
         $scope.posts = data.posts;
         if(data.posts.length===0) {
-          $location.path('/empty');
+          $location.path('/blog/empty');
         }
   	});
     $scope.logout = function () {
