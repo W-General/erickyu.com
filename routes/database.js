@@ -96,7 +96,7 @@ function editPost(post_id, post, callback) {
 	getCollection('posts', function(error, collection){
 		if(error) callback(error);
 		else {
-			collection.update({_id:post_id}, {$set: {title: post.title, body: post.body, date: post.date, _id: post_id}}, {safe: true}, function(error, result) {
+			collection.update({_id:post_id}, {$set: {title: post.title, body: post.body}}, {safe: true}, function(error, result) {
 				if(error) callback(error);
 				else callback(null, result);
 			});
