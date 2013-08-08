@@ -73,7 +73,7 @@ function addPost(post, callback) {
 		if (date.getTimezoneOffset() === 0) date.setTime(date.getTime()-240000);
 		var title = post.title.replace(/\s+/g, '-').toLowerCase();
 		var post_id = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+'/'+title;
-		collection.insert({title: post.title, body: post.body, date: new Date(), _id: post_id}, {w:0}, function(error, results){
+		collection.insert({title: post.title, body: date.getTimezoneOffset().toString(), date: new Date(), _id: post_id}, {w:0}, function(error, results){
 			if(error) callback(error);
 			else callback(null, results);
 		});
