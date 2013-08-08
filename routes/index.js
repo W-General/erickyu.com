@@ -75,10 +75,12 @@ function login(req, res){
 	//console.log('user:' + user.username + '\n');
 	//console.log('pass:' + user.password + '\n');
 	database.getUser(user.username, function(error, result){
-		if(result.password === user.password) {
-			req.session.username = result.username;
-			req.session.password = result.password;
-			//console.log('verified');
+		if (result) {
+			if(result.password === user.password) {
+				req.session.username = result.username;
+				req.session.password = result.password;
+				//console.log('verified');
+			}
 		}
 		res.json(true);
 	});
