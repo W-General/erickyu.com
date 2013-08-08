@@ -28,7 +28,6 @@ function partials(req, res){
 
 function getPosts(req, res){
 	database.findAll('posts', function(error, posts){
-		console.log(posts);
 		res.json({posts:posts});
 	});
 };

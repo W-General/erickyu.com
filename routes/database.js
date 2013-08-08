@@ -31,7 +31,6 @@ function init() {
 	MongoClient.connect(MONGOHQ_URL, function(err, _db) {
 		db = _db;
 
-
 	});
 };
 
