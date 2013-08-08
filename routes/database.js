@@ -71,6 +71,7 @@ function findAll(coll_name, callback) {
 function addPost(post, callback) {
 	getCollection('posts', function(error, collection) {
 		var date = new Date();
+		console.log(date.getTimezoneOffset());
 		if (date.getTimezoneOffset() === 0) date.setTime(date.getTime+240000);
 		var title = post.title.replace(/\s+/g, '-').toLowerCase();
 		var post_id = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+'/'+title;
