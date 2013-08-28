@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 
-var MONGOHQ_URL = process.env.MONGOHQ_URL || 'mongodb://nodejitsu:d0f4c334f3db76b00edd487a67a01284@dharma.mongohq.com:10055/nodejitsudb8874184791';
+var MONGOHQ_URL = process.env.MONGOHQ_URL || [omitted]
 //var Connection = require('mongodb').Connection;
 //var BSON = require('mongodb').BSON;
 //var ObjectID = require('mongodb').ObjectID;
@@ -30,6 +30,7 @@ function reset() {
 function init() {
 	MongoClient.connect(MONGOHQ_URL, function(err, _db) {
 		db = _db;
+
 
 	});
 };
