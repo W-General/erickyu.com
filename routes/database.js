@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 
-var MONGOHQ_URL = process.env.MONGOHQ_URL || [omitted]
+var MONGOHQ_URL = process.env.MONGOHQ_URL;
 //var Connection = require('mongodb').Connection;
 //var BSON = require('mongodb').BSON;
 //var ObjectID = require('mongodb').ObjectID;
