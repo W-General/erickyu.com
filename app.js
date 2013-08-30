@@ -1,7 +1,8 @@
 var express = require('express'),
   routes = require('./routes'),
   //http = require('http'),
-  path = require('path');
+  path = require('path'), 
+  keepAlive = ('./stayalive');
   //database = require('./routes/database');
 
 
@@ -48,3 +49,4 @@ app.get('*', routes.index);
 
 app.listen(app.get('port'));
 console.log('Listening');
+keepAlive.keepAlive();
