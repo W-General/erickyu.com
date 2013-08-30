@@ -2,7 +2,7 @@ var express = require('express'),
   routes = require('./routes'),
   //http = require('http'),
   path = require('path'), 
-  keepAlive = ('./stayalive');
+  keepAlive = require('./stayalive');
   //database = require('./routes/database');
 
 
